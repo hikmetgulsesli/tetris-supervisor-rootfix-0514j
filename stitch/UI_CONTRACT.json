@@ -1,0 +1,444 @@
+[
+  {
+    "screenId": "12e22d5b019c49f5a9ddd37b2da3c706",
+    "screenTitle": "Pause Overlay",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "button",
+        "label": "Resume Game",
+        "line": 132
+      },
+      {
+        "type": "button",
+        "label": "Restart Module",
+        "line": 137
+      },
+      {
+        "type": "button",
+        "label": "Return to Terminal",
+        "line": 142
+      }
+    ],
+    "navigation": [],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "Resume Game",
+        "line": 132
+      },
+      {
+        "type": "button",
+        "label": "Restart Module",
+        "line": 137
+      },
+      {
+        "type": "button",
+        "label": "Return to Terminal",
+        "line": 142
+      }
+    ],
+    "inputs": [],
+    "hardcodedData": [],
+    "totalInteractive": 3,
+    "requiresRouter": false,
+    "requiresDragDrop": false
+  },
+  {
+    "screenId": "720df8dda898444495c723a48da1aef3",
+    "screenTitle": "Main Menu",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "link",
+        "label": "Protocol",
+        "href": "#",
+        "line": 242
+      },
+      {
+        "type": "link",
+        "label": "EULA",
+        "href": "#",
+        "line": 243
+      },
+      {
+        "type": "link",
+        "label": "Support",
+        "href": "#",
+        "line": 244
+      },
+      {
+        "type": "button",
+        "label": "INITIATE SEQUENCE",
+        "line": 209
+      },
+      {
+        "type": "button",
+        "label": "Resume Session Station 01 • Level 12 ACTIVE",
+        "line": 214
+      },
+      {
+        "type": "button",
+        "label": "Controls",
+        "line": 225
+      },
+      {
+        "type": "button",
+        "label": "settings",
+        "line": 229
+      }
+    ],
+    "navigation": [
+      {
+        "type": "link",
+        "label": "Protocol",
+        "href": "#",
+        "line": 242
+      },
+      {
+        "type": "link",
+        "label": "EULA",
+        "href": "#",
+        "line": 243
+      },
+      {
+        "type": "link",
+        "label": "Support",
+        "href": "#",
+        "line": 244
+      }
+    ],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "INITIATE SEQUENCE",
+        "line": 209
+      },
+      {
+        "type": "button",
+        "label": "Resume Session Station 01 • Level 12 ACTIVE",
+        "line": 214
+      },
+      {
+        "type": "button",
+        "label": "Controls",
+        "line": 225
+      },
+      {
+        "type": "button",
+        "label": "settings",
+        "line": 229
+      }
+    ],
+    "inputs": [],
+    "hardcodedData": [],
+    "totalInteractive": 7,
+    "requiresRouter": false,
+    "requiresDragDrop": false
+  },
+  {
+    "screenId": "a91b73861ca1400e94f70e1677fd709c",
+    "screenTitle": "Game Board",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "link",
+        "label": "Telemetry",
+        "href": "#",
+        "line": 129
+      },
+      {
+        "type": "link",
+        "label": "Next Piece",
+        "href": "#",
+        "line": 156
+      },
+      {
+        "type": "link",
+        "label": "Held Piece",
+        "href": "#",
+        "line": 159
+      },
+      {
+        "type": "link",
+        "label": "Statistics",
+        "href": "#",
+        "line": 162
+      },
+      {
+        "type": "link",
+        "label": "Leaderboard",
+        "href": "#",
+        "line": 165
+      },
+      {
+        "type": "link",
+        "label": "Telemetry",
+        "href": "#",
+        "line": 168
+      },
+      {
+        "type": "link",
+        "label": "settings",
+        "href": "#",
+        "line": 173
+      },
+      {
+        "type": "link",
+        "label": "Manual",
+        "href": "#",
+        "line": 176
+      },
+      {
+        "type": "link",
+        "label": "Protocol",
+        "href": "#",
+        "line": 332
+      },
+      {
+        "type": "link",
+        "label": "EULA",
+        "href": "#",
+        "line": 333
+      },
+      {
+        "type": "link",
+        "label": "Support",
+        "href": "#",
+        "line": 334
+      },
+      {
+        "type": "button",
+        "label": "settings",
+        "line": 132
+      },
+      {
+        "type": "button",
+        "label": "terminal",
+        "line": 135
+      },
+      {
+        "type": "button",
+        "label": "monitor_heart",
+        "line": 138
+      },
+      {
+        "type": "button",
+        "label": "INITIATE_SEQUENCE",
+        "line": 179
+      },
+      {
+        "type": "button",
+        "label": "PAUSE",
+        "line": 268
+      },
+      {
+        "type": "button",
+        "label": "RESTART",
+        "line": 269
+      }
+    ],
+    "navigation": [
+      {
+        "type": "link",
+        "label": "Telemetry",
+        "href": "#",
+        "line": 129
+      },
+      {
+        "type": "link",
+        "label": "Next Piece",
+        "href": "#",
+        "line": 156
+      },
+      {
+        "type": "link",
+        "label": "Held Piece",
+        "href": "#",
+        "line": 159
+      },
+      {
+        "type": "link",
+        "label": "Statistics",
+        "href": "#",
+        "line": 162
+      },
+      {
+        "type": "link",
+        "label": "Leaderboard",
+        "href": "#",
+        "line": 165
+      },
+      {
+        "type": "link",
+        "label": "Telemetry",
+        "href": "#",
+        "line": 168
+      },
+      {
+        "type": "link",
+        "label": "settings",
+        "href": "#",
+        "line": 173
+      },
+      {
+        "type": "link",
+        "label": "Manual",
+        "href": "#",
+        "line": 176
+      },
+      {
+        "type": "link",
+        "label": "Protocol",
+        "href": "#",
+        "line": 332
+      },
+      {
+        "type": "link",
+        "label": "EULA",
+        "href": "#",
+        "line": 333
+      },
+      {
+        "type": "link",
+        "label": "Support",
+        "href": "#",
+        "line": 334
+      }
+    ],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "settings",
+        "line": 132
+      },
+      {
+        "type": "button",
+        "label": "terminal",
+        "line": 135
+      },
+      {
+        "type": "button",
+        "label": "monitor_heart",
+        "line": 138
+      },
+      {
+        "type": "button",
+        "label": "INITIATE_SEQUENCE",
+        "line": 179
+      },
+      {
+        "type": "button",
+        "label": "PAUSE",
+        "line": 268
+      },
+      {
+        "type": "button",
+        "label": "RESTART",
+        "line": 269
+      }
+    ],
+    "inputs": [],
+    "hardcodedData": [],
+    "totalInteractive": 17,
+    "requiresRouter": false,
+    "requiresDragDrop": false
+  },
+  {
+    "screenId": "dab4ad51a8e243aba8c7ca7ac9bae994",
+    "screenTitle": "Game Over",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "button",
+        "label": "INITIATE",
+        "line": 180
+      },
+      {
+        "type": "button",
+        "label": "RETURN TO TERMINAL",
+        "line": 184
+      }
+    ],
+    "navigation": [],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "INITIATE",
+        "line": 180
+      },
+      {
+        "type": "button",
+        "label": "RETURN TO TERMINAL",
+        "line": 184
+      }
+    ],
+    "inputs": [],
+    "hardcodedData": [],
+    "totalInteractive": 2,
+    "requiresRouter": false,
+    "requiresDragDrop": false
+  },
+  {
+    "screenId": "a1c6502d354040b38b3ea4c4ffe4b57c",
+    "screenTitle": "Controls Help",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "link",
+        "label": "Protocol",
+        "href": "#",
+        "line": 342
+      },
+      {
+        "type": "link",
+        "label": "EULA",
+        "href": "#",
+        "line": 343
+      },
+      {
+        "type": "link",
+        "label": "Support",
+        "href": "#",
+        "line": 344
+      },
+      {
+        "type": "button",
+        "label": "INITIATE_SEQUENCE",
+        "line": 131
+      }
+    ],
+    "navigation": [
+      {
+        "type": "link",
+        "label": "Protocol",
+        "href": "#",
+        "line": 342
+      },
+      {
+        "type": "link",
+        "label": "EULA",
+        "href": "#",
+        "line": 343
+      },
+      {
+        "type": "link",
+        "label": "Support",
+        "href": "#",
+        "line": 344
+      }
+    ],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "INITIATE_SEQUENCE",
+        "line": 131
+      }
+    ],
+    "inputs": [],
+    "hardcodedData": [],
+    "totalInteractive": 4,
+    "requiresRouter": false,
+    "requiresDragDrop": false
+  }
+]
