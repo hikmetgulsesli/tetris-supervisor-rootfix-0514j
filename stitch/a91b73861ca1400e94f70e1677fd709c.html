@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tetris Supervisor Core</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#004965",
+                        "primary": "#8ed5ff",
+                        "on-surface": "#d5e3fd",
+                        "primary-fixed-dim": "#7bd0ff",
+                        "tertiary": "#ffbcbf",
+                        "surface-tint": "#7bd0ff",
+                        "on-tertiary-fixed": "#40000d",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "surface-container": "#122033",
+                        "surface-variant": "#273649",
+                        "on-tertiary-fixed-variant": "#92002a",
+                        "on-secondary": "#003915",
+                        "on-tertiary-container": "#8c0028",
+                        "on-secondary-fixed-variant": "#005321",
+                        "primary-fixed": "#c4e7ff",
+                        "surface-container-lowest": "#010f21",
+                        "secondary-fixed-dim": "#4ae176",
+                        "secondary-fixed": "#6bff8f",
+                        "error": "#ffb4ab",
+                        "on-background": "#d5e3fd",
+                        "inverse-on-surface": "#233144",
+                        "on-primary-fixed": "#001e2c",
+                        "secondary": "#4ae176",
+                        "on-primary": "#00354a",
+                        "primary-container": "#38bdf8",
+                        "surface": "#051426",
+                        "outline": "#87929a",
+                        "surface-dim": "#051426",
+                        "on-primary-fixed-variant": "#004c69",
+                        "surface-container-highest": "#273649",
+                        "on-secondary-container": "#004119",
+                        "secondary-container": "#00b954",
+                        "outline-variant": "#3e484f",
+                        "surface-bright": "#2c3a4e",
+                        "tertiary-container": "#ff929a",
+                        "tertiary-fixed": "#ffdadb",
+                        "background": "#051426",
+                        "inverse-primary": "#00668a",
+                        "on-surface-variant": "#bdc8d1",
+                        "on-tertiary": "#67001b",
+                        "surface-container-low": "#0d1c2f",
+                        "tertiary-fixed-dim": "#ffb2b7",
+                        "surface-container-high": "#1c2b3e",
+                        "inverse-surface": "#d5e3fd",
+                        "on-secondary-fixed": "#002109",
+                        
+                        "tetris-i": "#38bdf8",
+                        "tetris-j": "#3b82f6",
+                        "tetris-l": "#f97316",
+                        "tetris-o": "#eab308",
+                        "tetris-s": "#22c55e",
+                        "tetris-t": "#a855f7",
+                        "tetris-z": "#ef4444"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit-1": "4px",
+                        "unit-8": "32px",
+                        "unit-4": "16px",
+                        "container-margin": "24px",
+                        "base": "4px",
+                        "unit-2": "8px",
+                        "unit-6": "24px",
+                        "grid-gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Sora"],
+                        "body-lg": ["Sora"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg": ["Sora"],
+                        "body-md": ["Sora"],
+                        "display-lg": ["Sora"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-md": ["Sora"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .matrix-bg {
+            background-image: linear-gradient(to right, rgba(135, 146, 154, 0.1) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(135, 146, 154, 0.1) 1px, transparent 1px);
+            background-size: 10% 5%;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface text-primary border-b border-outline-variant flex justify-between items-center w-full px-unit-6 h-16 max-w-full docked full-width top-0 z-50">
+<div class="flex items-center gap-unit-4">
+<span class="font-display-lg text-headline-md tracking-tighter text-primary uppercase">Tetris Supervisor</span>
+</div>
+<div class="flex items-center gap-unit-4 hidden md:flex">
+<!-- Active state example for navigation -->
+<a class="text-secondary font-bold border-b-2 border-secondary font-label-md text-label-md py-5 hover:bg-surface-variant hover:text-primary transition-colors duration-150" href="#">Telemetry</a>
+</div>
+<div class="flex items-center gap-unit-4">
+<button class="text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors duration-150 p-2 rounded">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors duration-150 p-2 rounded">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors duration-150 p-2 rounded">
+<span class="material-symbols-outlined">monitor_heart</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 relative">
+<!-- SideNavBar -->
+<nav class="bg-surface-container-lowest dark:bg-surface-container-lowest text-secondary border-r border-outline-variant fixed left-0 top-16 bottom-0 flex flex-col p-unit-4 z-40 docked h-full w-64 hidden lg:flex">
+<div class="mb-unit-8">
+<div class="flex items-center gap-unit-4 mb-unit-2">
+<img alt="Supervisor Profile" class="w-10 h-10 rounded border border-outline" data-alt="A highly stylized, minimalist cyberpunk avatar portrait. High contrast lighting with neon blue and cyan accents against a deep dark background. Corporate supervisor aesthetic mixed with 80s arcade nostalgia. Professional but intense expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC9dmMVDmWATvS8rqsa6zTa6QGN1hehLhRTfOGbxG6OuJ-8tSXK7QhYyAn5yM9sz1eGbrrKp-IstIUx9EXD40cUvXNVNe0VMZz6dTmD8Pa_RlxO1SlD9jhKaxZuZVSS-vqBLlRoeQzB2DhoXIWtK18axo7cqc2OrKte5midBIlxZOufA8gCTtSxB2nEWzc1ewGbLpMCGqcTsuoZxvnpTNSjIhQb2abAoqN0oLgrQ6CB34T1SzaX9sHEZN0HP8Eg8Jg4zNtoD9V4Vu3"/>
+<div>
+<h2 class="font-headline-md text-label-md text-primary">Station 01</h2>
+<p class="font-label-sm text-label-sm text-secondary">System Nominal</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-unit-2 flex-1">
+<a class="flex items-center gap-unit-4 p-unit-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-200 rounded font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">grid_view</span> Next Piece
+                </a>
+<a class="flex items-center gap-unit-4 p-unit-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-200 rounded font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">pan_tool</span> Held Piece
+                </a>
+<a class="flex items-center gap-unit-4 p-unit-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-200 rounded font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">analytics</span> Statistics
+                </a>
+<a class="flex items-center gap-unit-4 p-unit-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-200 rounded font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">military_tech</span> Leaderboard
+                </a>
+<a class="flex items-center gap-unit-4 p-unit-2 bg-secondary-container text-on-secondary-container font-bold rounded-lg border-l-4 border-secondary font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">sensors</span> Telemetry
+                </a>
+</div>
+<div class="mt-auto flex flex-col gap-unit-2 pt-unit-4 border-t border-outline-variant">
+<a class="flex items-center gap-unit-4 p-unit-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-200 rounded font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+                </a>
+<a class="flex items-center gap-unit-4 p-unit-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-200 rounded font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">help</span> Manual
+                </a>
+<button class="mt-unit-4 bg-primary-container text-on-primary-container font-label-md text-label-md py-unit-2 px-unit-4 rounded border border-transparent hover:brightness-110 hover:border-b-2 hover:border-r-2 transition-all w-full uppercase">INITIATE_SEQUENCE</button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 lg:ml-64 p-unit-4 md:p-unit-8 flex flex-col lg:flex-row gap-grid-gutter justify-center items-start min-h-[calc(100vh-64px-48px)]">
+<!-- Left Telemetry Panel -->
+<div class="w-full lg:w-64 flex flex-col gap-unit-4 order-2 lg:order-1">
+<!-- Held Piece Module -->
+<div class="bg-surface-container border border-outline-variant rounded p-unit-4 flex flex-col gap-unit-2">
+<div class="border-b border-outline-variant pb-unit-1 mb-unit-2 flex justify-between items-center">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase">Held Piece</h3>
+<span class="material-symbols-outlined text-outline text-sm">pan_tool</span>
+</div>
+<div class="h-24 bg-surface-container-lowest border border-outline flex items-center justify-center relative">
+<!-- T Piece Graphic representation -->
+<div class="grid grid-cols-3 grid-rows-2 gap-1 w-16 h-10">
+<div class="col-start-2 bg-tetris-t border border-tetris-t opacity-80"></div>
+<div class="col-start-1 row-start-2 bg-tetris-t border border-tetris-t opacity-80"></div>
+<div class="col-start-2 row-start-2 bg-tetris-t border border-tetris-t opacity-80"></div>
+<div class="col-start-3 row-start-2 bg-tetris-t border border-tetris-t opacity-80"></div>
+</div>
+</div>
+</div>
+<!-- Statistics Module -->
+<div class="bg-surface-container border border-outline-variant rounded p-unit-4 flex flex-col gap-unit-2">
+<div class="border-b border-outline-variant pb-unit-1 mb-unit-2 flex justify-between items-center">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase">Telemetry Stats</h3>
+<span class="material-symbols-outlined text-outline text-sm">analytics</span>
+</div>
+<div class="flex justify-between items-end mb-unit-2">
+<span class="font-label-sm text-label-sm text-outline">SCORE</span>
+<span class="font-label-md text-label-md text-primary">024,590</span>
+</div>
+<div class="flex justify-between items-end mb-unit-2">
+<span class="font-label-sm text-label-sm text-outline">LINES</span>
+<span class="font-label-md text-label-md text-on-surface">112</span>
+</div>
+<div class="flex justify-between items-end mb-unit-2">
+<span class="font-label-sm text-label-sm text-outline">LEVEL</span>
+<span class="font-label-md text-label-md text-secondary">08</span>
+</div>
+<div class="mt-unit-2 pt-unit-2 border-t border-outline-variant border-dashed">
+<div class="flex items-center gap-2 mb-1">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">SYS: NOMINAL</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tetris-o"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">APM: 45</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Central Game Board (The Matrix) -->
+<div class="w-full max-w-[320px] md:max-w-[400px] flex flex-col items-center order-1 lg:order-2 mx-auto">
+<div class="bg-surface-container-lowest border-2 border-outline-variant p-2 rounded-sm shadow-[0_0_15px_rgba(56,189,248,0.1)]">
+<!-- 10x20 Grid -->
+<div class="w-[240px] h-[480px] bg-background border border-outline matrix-bg relative overflow-hidden">
+<!-- Placed Blocks (Example) -->
+<div class="absolute bottom-0 w-full h-[10%] flex">
+<div class="w-[10%] h-full bg-tetris-s border border-surface-container-lowest"></div>
+<div class="w-[10%] h-full bg-tetris-s border border-surface-container-lowest"></div>
+<div class="w-[10%] h-full bg-surface-variant border border-surface-container-lowest"></div>
+<div class="w-[10%] h-full bg-tetris-o border border-surface-container-lowest"></div>
+<div class="w-[10%] h-full bg-tetris-o border border-surface-container-lowest"></div>
+<div class="w-[10%] h-full bg-tetris-i border border-surface-container-lowest"></div>
+<div class="w-[10%] h-full bg-tetris-i border border-surface-container-lowest"></div>
+<div class="w-[10%] h-full bg-tetris-i border border-surface-container-lowest"></div>
+<div class="w-[10%] h-full bg-tetris-i border border-surface-container-lowest"></div>
+<div class="w-[10%] h-full bg-surface-variant border border-surface-container-lowest"></div>
+</div>
+<!-- Active Falling Block -->
+<div class="absolute top-[20%] left-[40%] w-[30%] h-[10%] grid grid-cols-3 grid-rows-2">
+<div class="col-start-1 row-start-1 bg-tetris-j border border-surface-container-lowest shadow-[0_0_8px_rgba(59,130,246,0.6)]"></div>
+<div class="col-start-1 row-start-2 bg-tetris-j border border-surface-container-lowest shadow-[0_0_8px_rgba(59,130,246,0.6)]"></div>
+<div class="col-start-2 row-start-2 bg-tetris-j border border-surface-container-lowest shadow-[0_0_8px_rgba(59,130,246,0.6)]"></div>
+<div class="col-start-3 row-start-2 bg-tetris-j border border-surface-container-lowest shadow-[0_0_8px_rgba(59,130,246,0.6)]"></div>
+</div>
+<!-- Ghost Piece -->
+<div class="absolute bottom-[10%] left-[40%] w-[30%] h-[10%] grid grid-cols-3 grid-rows-2 opacity-50">
+<div class="col-start-1 row-start-1 border border-dashed border-tetris-j"></div>
+<div class="col-start-1 row-start-2 border border-dashed border-tetris-j"></div>
+<div class="col-start-2 row-start-2 border border-dashed border-tetris-j"></div>
+<div class="col-start-3 row-start-2 border border-dashed border-tetris-j"></div>
+</div>
+</div>
+</div>
+<!-- Core Controls -->
+<div class="w-full mt-unit-4 flex justify-between gap-unit-2">
+<button class="flex-1 border border-outline text-on-surface hover:bg-surface-variant hover:border-primary-container font-label-md text-label-md py-unit-2 rounded transition-all">PAUSE</button>
+<button class="flex-1 bg-primary-container text-on-primary-container border border-transparent hover:brightness-110 font-label-md text-label-md py-unit-2 rounded transition-all shadow-[2px_2px_0px_rgba(51,65,85,1)] hover:translate-y-[1px] hover:translate-x-[1px] hover:shadow-[1px_1px_0px_rgba(51,65,85,1)]">RESTART</button>
+</div>
+</div>
+<!-- Right Telemetry Panel -->
+<div class="w-full lg:w-64 flex flex-col gap-unit-4 order-3">
+<!-- Next Piece Module -->
+<div class="bg-surface-container border border-outline-variant rounded p-unit-4 flex flex-col gap-unit-2">
+<div class="border-b border-outline-variant pb-unit-1 mb-unit-2 flex justify-between items-center">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase">Next Sequence</h3>
+<span class="material-symbols-outlined text-outline text-sm">grid_view</span>
+</div>
+<!-- Next 1 -->
+<div class="h-20 bg-surface-container-lowest border border-outline flex items-center justify-center mb-unit-2 relative border-l-2 border-l-tetris-i">
+<div class="grid grid-cols-4 gap-1 w-20 h-4">
+<div class="bg-tetris-i border border-tetris-i opacity-90"></div>
+<div class="bg-tetris-i border border-tetris-i opacity-90"></div>
+<div class="bg-tetris-i border border-tetris-i opacity-90"></div>
+<div class="bg-tetris-i border border-tetris-i opacity-90"></div>
+</div>
+</div>
+<!-- Next 2 & 3 smaller -->
+<div class="flex gap-unit-2">
+<div class="flex-1 h-16 bg-surface-container-lowest border border-outline flex items-center justify-center opacity-60">
+<div class="grid grid-cols-2 grid-rows-2 gap-1 w-8 h-8">
+<div class="bg-tetris-o border border-tetris-o"></div>
+<div class="bg-tetris-o border border-tetris-o"></div>
+<div class="bg-tetris-o border border-tetris-o"></div>
+<div class="bg-tetris-o border border-tetris-o"></div>
+</div>
+</div>
+<div class="flex-1 h-16 bg-surface-container-lowest border border-outline flex items-center justify-center opacity-40">
+<div class="grid grid-cols-3 grid-rows-2 gap-[2px] w-8 h-6">
+<div class="col-start-2 bg-tetris-s border border-tetris-s"></div>
+<div class="col-start-3 bg-tetris-s border border-tetris-s"></div>
+<div class="col-start-1 row-start-2 bg-tetris-s border border-tetris-s"></div>
+<div class="col-start-2 row-start-2 bg-tetris-s border border-tetris-s"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- System Logs / Mini Console -->
+<div class="bg-surface-container border border-outline-variant rounded p-unit-4 flex flex-col gap-unit-2 flex-1">
+<div class="border-b border-outline-variant pb-unit-1 mb-unit-2 flex justify-between items-center">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase">Event Log</h3>
+<span class="material-symbols-outlined text-outline text-sm">terminal</span>
+</div>
+<div class="font-label-sm text-label-sm text-outline font-mono flex flex-col gap-1 overflow-y-auto max-h-32">
+<div class="flex gap-2"><span class="text-secondary">[08:42:11]</span> <span>Game initialized.</span></div>
+<div class="flex gap-2"><span class="text-secondary">[08:42:12]</span> <span>Grid clear.</span></div>
+<div class="flex gap-2"><span class="text-secondary">[08:44:05]</span> <span>Line clear (x1).</span></div>
+<div class="flex gap-2"><span class="text-tetris-o">[08:45:22]</span> <span>Stack height warning.</span></div>
+<div class="flex gap-2"><span class="text-primary-container">[08:46:10]</span> <span>TETRIS achieved.</span></div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-surface-container-low text-on-surface-variant border-t border-outline-variant w-full py-unit-2 px-unit-6 flex justify-between items-center text-xs docked full-width bottom-0 z-50">
+<div class="font-label-md text-label-md text-primary">
+            © 2024 TETRIS_SUPERVISOR_CORE
+        </div>
+<div class="flex gap-unit-4 font-label-sm text-label-sm">
+<a class="text-on-surface-variant hover:text-secondary transition-opacity duration-300" href="#">Protocol</a>
+<a class="text-on-surface-variant hover:text-secondary transition-opacity duration-300" href="#">EULA</a>
+<a class="text-on-surface-variant hover:text-secondary transition-opacity duration-300" href="#">Support</a>
+</div>
+</footer>
+</body></html>
